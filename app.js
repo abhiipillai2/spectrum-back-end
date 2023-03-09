@@ -7,6 +7,9 @@ const hardwarePuash = require('./Modules/hardwarePush')
 const hardwareAdapter = require('./Modules/hardwareAdapter')
 const dataProcessor = require('./Modules/dataProcessor')
 const logger = require('./Modules/logMaster')
+const tarrifMaster = require('./Modules/tarrifMaster.js')
+const tarrifDayMaster = require('./Modules/taffifdaymaster.js')
+const tarrifMonthMaster = require('./Modules/tarrifMonthMaster.js')
 const dotenv = require('dotenv').config({ path: './class/sql.env' })
 const app = express()
 const port = process.env.PORT || 5000 //must for production environmentnpm install dotenv --save
@@ -31,5 +34,14 @@ app.use(hardwareAdapter);
 
 //using dataprossor
 app.use(dataProcessor);
+
+//using taffif master
+app.use(tarrifMaster);
+
+//using taffif day master
+app.use(tarrifDayMaster);
+
+//using taffif month master
+app.use(tarrifMonthMaster);
 
 app.listen(port, () => logger.info("Started sucessfully"));

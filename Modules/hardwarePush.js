@@ -19,11 +19,11 @@ router.post('/vipPush', (req, res) => {
     let current = body.data.current
     let voltage = body.data.voltage
     let active_power = body.data.active_power
-    let reactive_power = body.data.reactive_power
+    let reactive_power = 0
     let apparent_power = body.data.apparant_power
-    let power_factor = body.data.power_factor
-    let thd = body.data.thd
-    let phase_angle = body.data.phase_angle
+    let power_factor = 0
+    let thd = 0
+    let phase_angle = 0
 
 
 
@@ -38,14 +38,24 @@ router.post('/vipPush', (req, res) => {
         logger.info("inserting data to vip")
 
         connection.query('INSERT INTO vip_push_master_data (current,voltage,apparant_power,active_power,reactive_power,power_factor,thd,hardware_id,phase_angle) VALUES(?,?,?,?,?,?,?,?,?)', [ current , voltage , apparent_power,active_power,reactive_power,power_factor,thd,hardwareId,phase_angle ], (err, rows) => {
+        connection.release()
             //vip updating connection
+            if (!err) {
+                res.send({
+                    "statusCode": "SC0000",
+                    "statusDesc": "Success"
+                })
+
+                logger.info("inserted values in vip table")
+            } 
+         else {
+            res.send(err)
+
+            logger.error("database error")
+            logger.error(err)
+        }
         });
     });
-
-    res.send({
-        "statusCode": "SC0000",
-        "statusDesc": "Success"
-    })
     logger.info("vip-push-sucess-full")
 
 });
