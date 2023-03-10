@@ -12,7 +12,7 @@ const router = express.Router()
 
 //////////////////////////////
 //bill hour
-router.get('/dayBill/:tred/:id', (req, res) => {
+router.post('/dayBill/:tred/:id', (req, res) => {
 
     //route paramters
     let param = req.params
@@ -29,6 +29,7 @@ router.get('/dayBill/:tred/:id', (req, res) => {
     let UNIT = 0
     let dayHour = 0
 
+    console.log(req.body)
     pool.connection.getConnection( (err, connection) => {
         if (err) {
 
@@ -50,8 +51,7 @@ router.get('/dayBill/:tred/:id', (req, res) => {
                     snapshot_value = grb[i].apparant_power + snapshot_value
                 }
                 snapshot = snapshot_value / grb.length
-                // avgUnit = ((snapshot * dayHour )/1000)
-                avgUnit = 305
+                avgUnit = ((snapshot * dayHour )/1000)
                 
                 //houer case
                 if (avgUnit <= 50){

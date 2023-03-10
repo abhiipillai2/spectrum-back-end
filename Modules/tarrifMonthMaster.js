@@ -12,8 +12,9 @@ const router = express.Router()
 
 //////////////////////////////
 //bill hour
-router.get('/monthBill/:tred/:id', (req, res) => {
+router.post('/monthBill/:tred/:id', (req, res) => {
 
+    console.log(req)
     //route paramters
     let param = req.params
     let maxnumber = req.params.id
@@ -29,6 +30,8 @@ router.get('/monthBill/:tred/:id', (req, res) => {
     let UNIT = 0
     let dayHour = 0
 
+    console.log("provider name")
+    console.log(req.body)
     pool.connection.getConnection( (err, connection) => {
         if (err) {
 
@@ -51,9 +54,7 @@ router.get('/monthBill/:tred/:id', (req, res) => {
                     snapshot_value = grb[i].apparant_power + snapshot_value
                 }
                 snapshot = snapshot_value / grb.length
-                // avgUnit = ((snapshot * monthHour )/1000)
-                avgUnit = 43
-                
+                avgUnit = ((snapshot * monthHour )/1000)
                 //houer case
                 if (avgUnit <= 50){
 

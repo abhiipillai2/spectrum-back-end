@@ -12,7 +12,7 @@ const router = express.Router()
 
 //////////////////////////////
 //bill hour
-router.get('/hourBill/:tred/:id', (req, res) => {
+router.post('/hourBill/:tred/:id', (req, res) => {
 
     //route paramters
     let param = req.params
@@ -46,8 +46,7 @@ router.get('/hourBill/:tred/:id', (req, res) => {
                     snapshot_value = grb[i].apparant_power + snapshot_value
                 }
                 snapshot = snapshot_value / grb.length
-                // avgUnit = ((snapshot * maxnumber )/1000)
-                avgUnit = 45
+                avgUnit = ((snapshot * maxnumber )/1000)
                 
                 //houer case
                 if (avgUnit <= 50){
