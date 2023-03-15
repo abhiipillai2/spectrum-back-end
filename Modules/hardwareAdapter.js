@@ -62,19 +62,61 @@ router.post('/hwRm', (req, res) => {
             logger.error(err)
         }
         console.log(`connected id ${connection.threadId}`)
-        const param = req.body.e_mail
+        const param = req.body.hardware_id
 
         logger.info(param)
         logger.info(`connected id ${connection.threadId}`)
         logger.info("deleting data")
         logger.info(`DELETE FROM hardware_e_mail_schema WHERE e_mail = ?`)
 
-        connection.query('DELETE FROM hardware_e_mail_schema WHERE e_mail = ?', param, (err, rows) => {
+        connection.query('DELETE FROM hardware_e_mail_schema WHERE hardware_id = ?', param, (err, rows) => {
             connection.release()
 
             if (!err) {
                 res.send('rm-200')
 
+                logger.info("sedig 200")
+                logger.info("end of requrst processing")
+            } else {
+                res.send(err)
+
+                logger.error("database errorr")
+                logger.error(err)
+            }
+        });
+        console.log(param)
+    });
+
+});
+
+//present connection
+router.post('/hwConnect', (req, res) => {
+
+    logger.info("request reached")
+
+    //db updation according to the user details
+    pool.connection.getConnection((err, connection) => {
+        if (err) {
+
+            logger.error(err)
+        }
+
+        console.log(`connected id ${connection.threadId}`)
+        const param = req.body
+        const email = req.body.e_mail
+
+        console.log(email)
+        logger.info(param)
+        logger.info(`connected id ${connection.threadId}`)
+        logger.info("inserting data")
+        logger.info(`INSERT INTO hardware_e_mail_schema SET id=?`)
+
+        connection.query('select hardware_id,sensor_name from hardware_e_mail_schema where e_mail = ?',email, (err, rows) => {
+            connection.release()
+
+            if (!err) {
+
+                res.send(rows)
                 logger.info("sedig 200")
                 logger.info("end of requrst processing")
             } else {

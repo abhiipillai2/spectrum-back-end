@@ -87,7 +87,7 @@ router.get('/currentAuth/:id', (req, res) => {
         console.log(`connected id ${connection.threadId}`)
         logger.info("getting auth details using id")
         logger.info(`SELECT * FROM user_data_master WHERE e_mail = ${authParameter}`)
-        connection.query('SELECT * FROM user_data_master WHERE e_mail = ' + authParameter, (err, rows) => {
+        connection.query('SELECT * FROM user_data_master WHERE e_mail = ?', authParameter, (err, rows) => {
             connection.release()
 
             if (!err) {
