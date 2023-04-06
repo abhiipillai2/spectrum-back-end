@@ -75,6 +75,7 @@ router.post('/hourBill/:tred/:id', (req, res) => {
 
                                 //slab value
                                 connection.query('select slab_value from teliscopic_tarrif_value_mapping where provider_id = ? AND slab = ? ORDER BY id DESC LIMIT 1',[ provider_id , slab ],(err,rows)=>{
+                                    connection.release()
                                     if(!err){
 
                                         //slab value
@@ -149,6 +150,7 @@ router.post('/hourBill/:tred/:id', (req, res) => {
 
                                                                     //finding new slab value
                                                                     connection.query('select slab_value from tarrif_value_mapping where provider_id = ? AND slab = ? ORDER BY id DESC LIMIT 1',[ provider_id , new_slab ],(err,rows)=>{
+                                                                        connection.release()
                                                                         if(!err){
                                                                             let new_slab_value = rows[0].slab_value
                                                                             let additional_bill = (new_slab_value * balancePower)

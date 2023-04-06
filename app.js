@@ -10,6 +10,8 @@ const logger = require('./Modules/logMaster')
 const tarrifMaster = require('./Modules/tarrifMaster.js')
 const tarrifDayMaster = require('./Modules/taffifdaymaster.js')
 const tarrifMonthMaster = require('./Modules/tarrifMonthMaster.js')
+const loadCurve = require('./Modules/loadCurveMater.js')
+const peakValue = require('./Modules/peakValueMater.js')
 const dotenv = require('dotenv').config({ path: './class/sql.env' })
 const app = express()
 const port = process.env.PORT || 5000 //must for production environmentnpm install dotenv --save
@@ -43,5 +45,11 @@ app.use(tarrifDayMaster);
 
 //using taffif month master
 app.use(tarrifMonthMaster);
+
+//using load curve
+app.use(loadCurve);
+
+//using peak value
+app.use(peakValue);
 
 app.listen(port, () => logger.info("Started sucessfully"));

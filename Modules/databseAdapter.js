@@ -13,6 +13,7 @@ const pool = mysql.createPool({
 });
 //for gettng connection stutus
 pool.getConnection((err, connection) => {
+    connection.release()
     if (err) {
         console.log(err)
         logger.debug("databas is not connected");
